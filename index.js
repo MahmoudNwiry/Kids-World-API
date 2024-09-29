@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const { DB_URI } = require("./app/config/db.config");
+require('dotenv').config()
 
 mongoose.set('strictQuery', true);
 
@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended : true}));
 
 (async function(){
     try {
-        await mongoose.connect(DB_URI);
+        await mongoose.connect(process.env.MONGODB_URL);
         console.log("Connected to database");
     } catch (error) {
         console.log(`Error: ${error}`);

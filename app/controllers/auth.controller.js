@@ -1,4 +1,4 @@
-const config = require("../config/auth.config");
+require('dotenv').config()
 const db = require("../models");
 const nodemailer = require("nodemailer")
 
@@ -118,7 +118,7 @@ exports.supervisorSignIn = (req, res) => {
         }
 
         const token = jwt.sign({ id: user.id },
-            config.secret,
+            process.env.SECRET_KEY,
             {
               algorithm: 'HS256',
               allowInsecureKeySizes: true,
@@ -157,7 +157,7 @@ exports.schoolSignIn = (req, res) => {
         }
 
         const token = jwt.sign({ id: user.id },
-            config.secret,
+            process.env.SECRET_KEY,
             {
               algorithm: 'HS256',
               allowInsecureKeySizes: true,
@@ -197,7 +197,7 @@ exports.teacherSignIn = (req, res) => {
         }
 
         const token = jwt.sign({ id: user.id },
-            config.secret,
+            process.env.SECRET_KEY,
             {
               algorithm: 'HS256',
               allowInsecureKeySizes: true,
@@ -238,7 +238,7 @@ exports.studentSignIn = (req, res) => {
         }
 
         const token = jwt.sign({ id: user.id },
-            config.secret,
+            process.env.SECRET_KEY,
             {
               algorithm: 'HS256',
               allowInsecureKeySizes: true,

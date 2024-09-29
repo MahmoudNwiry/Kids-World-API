@@ -1,5 +1,5 @@
+require('dotenv').config()
 const jwt = require("jsonwebtoken");
-const config = require("../config/auth.config.js");
 const db = require("../models");
 
 const Supervisor = db.supervisor;
@@ -15,7 +15,7 @@ const verifyToken = (req, res, next) => {
     }
   
     jwt.verify(token,
-              config.secret,
+              process.env.SECRET_KEY,
               (err, decoded) => {
                 if (err) {
                   return res.status(401).send({
