@@ -12,22 +12,34 @@ module.exports = function(app) {
   
     app.post(
         "/api/auth/supervisor/signup",
-        verifySignUp.checkSupervisorDuplicateUsernameOrEmail,
+        [
+          verifySignUp.checkSupervisorDuplicateUsernameOrEmail,
+          verifySignUp.checkSupervisorDuplicateNumber
+        ],
         controller.supervisorSignUp
     );
     app.post(
         "/api/auth/school/signup",
-        verifySignUp.checkSchoolDuplicateUsernameOrEmail,
+        [
+          verifySignUp.checkSchoolDuplicateUsernameOrEmail,
+          verifySignUp.checkSchoolDuplicateNumber
+        ],
         controller.schoolSignUp
     );
     app.post(
         "/api/auth/teacher/signup",
-        verifySignUp.checkTeacherDuplicateUsernameOrEmail,
+        [
+          verifySignUp.checkTeacherDuplicateUsernameOrEmail,
+          verifySignUp.checkTeacherDuplicateNumber
+        ],
         controller.teacherSignUp
     );
     app.post(
         "/api/auth/student/signup",
-        verifySignUp.checkStudentDuplicateUsernameOrEmail,
+        [
+          verifySignUp.checkStudentDuplicateUsernameOrEmail,
+          verifySignUp.checkStudentDuplicateNumber
+        ],
         controller.studentSignUp
     );
   

@@ -16,6 +16,7 @@ var bcrypt = require("bcryptjs");
 exports.supervisorSignUp = (req, res) => {
     const user = new Supervisor({
         username : req.body.username,
+        userNumber : req.body.userNumber,
         email : req.body.email,
         password : bcrypt.hashSync(req.body.password, 8)
     })
@@ -31,6 +32,7 @@ exports.supervisorSignUp = (req, res) => {
 exports.schoolSignUp = (req, res) => {
     const user = new School({
         username : req.body.username,
+        userNumber : req.body.userNumber,
         email : req.body.email,
         password : bcrypt.hashSync(req.body.password, 8),
         name : {
@@ -57,6 +59,7 @@ exports.schoolSignUp = (req, res) => {
 exports.teacherSignUp = (req, res) => {
     const user = new Teacher({
         username : req.body.username,
+        userNumber : req.body.userNumber,
         email : req.body.email,
         password : bcrypt.hashSync(req.body.password, 8),
         levelID : req.body.levelID,
@@ -75,6 +78,7 @@ exports.teacherSignUp = (req, res) => {
 exports.studentSignUp = (req, res) => {
     const user = new Student({
         username : req.body.username,
+        userNumber : req.body.userNumber,
         email : req.body.email,
         password : bcrypt.hashSync(req.body.password, 8),
         levelID : req.body.levelID,
@@ -96,7 +100,7 @@ exports.studentSignUp = (req, res) => {
 
 exports.supervisorSignIn = (req, res) => {
     Supervisor.findOne({
-        username : req.body.username
+        userNumber : req.body.userNumber
     })
     .exec((err, user) => {
         if (err) {
@@ -135,7 +139,7 @@ exports.supervisorSignIn = (req, res) => {
 }
 exports.schoolSignIn = (req, res) => {
     School.findOne({
-        username : req.body.username
+        userNumber : req.body.userNumber
     })
     .exec((err, user) => {
         if (err) {
@@ -175,7 +179,7 @@ exports.schoolSignIn = (req, res) => {
 }
 exports.teacherSignIn = (req, res) => {
     Teacher.findOne({
-        username : req.body.username
+        userNumber : req.body.userNumber
     })
     .exec((err, user) => {
         if (err) {
@@ -216,7 +220,7 @@ exports.teacherSignIn = (req, res) => {
 }
 exports.studentSignIn = (req, res) => {
     Student.findOne({
-        username : req.body.username
+        userNumber : req.body.userNumber
     })
     .exec((err, user) => {
         if (err) {

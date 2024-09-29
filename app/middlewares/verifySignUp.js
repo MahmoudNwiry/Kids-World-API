@@ -145,11 +145,88 @@ checkStudentDuplicateUsernameOrEmail = (req, res, next) => {
 };
 
 
+checkSupervisorDuplicateNumber = (req, res, next) => {
+  Supervisor.findOne({
+    userNumber : req.body.userNumber
+  })
+  .exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if(user) {
+      res.status(400).send({ message: "فشل: رقم المشرف موجود بالفعل!" });
+      return;
+    }
+
+    next();
+  })
+}
+checkSchoolDuplicateNumber = (req, res, next) => {
+  School.findOne({
+    userNumber : req.body.userNumber
+  })
+  .exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if(user) {
+      res.status(400).send({ message: "فشل: رقم المدير موجود بالفعل!" });
+      return;
+    }
+
+    next();
+  })
+}
+checkTeacherDuplicateNumber = (req, res, next) => {
+  Teacher.findOne({
+    userNumber : req.body.userNumber
+  })
+  .exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if(user) {
+      res.status(400).send({ message: "فشل: رقم المعلم موجود بالفعل!" });
+      return;
+    }
+
+    next();
+  })
+}
+checkStudentDuplicateNumber = (req, res, next) => {
+  Student.findOne({
+    userNumber : req.body.userNumber
+  })
+  .exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    if(user) {
+      res.status(400).send({ message: "فشل: رقم الطالب موجود بالفعل!" });
+      return;
+    }
+
+    next();
+  })
+}
+
 const verifySignUp = {
     checkSupervisorDuplicateUsernameOrEmail,
     checkSchoolDuplicateUsernameOrEmail,
     checkTeacherDuplicateUsernameOrEmail,
-    checkStudentDuplicateUsernameOrEmail
+    checkStudentDuplicateUsernameOrEmail,
+    checkSupervisorDuplicateNumber,
+    checkSchoolDuplicateNumber,
+    checkTeacherDuplicateNumber,
+    checkStudentDuplicateNumber
 }
 
 module.exports = verifySignUp
