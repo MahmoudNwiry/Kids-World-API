@@ -5,6 +5,10 @@ const studentSchema = new Schema({
         type : String,
         required : true,
     },
+    userNumber : {
+        type : Number,
+        required : true
+    },
     email : {
         type : String,
         required : true,

@@ -19,6 +19,10 @@ const schoolSchema = new Schema({
         type : String,
         required : true,
     },
+    userNumber : {
+        type : Number,
+        required : true
+    },
     phoneNumber : {
         type : String,
         required : true
