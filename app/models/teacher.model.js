@@ -6,8 +6,7 @@ const teacherSchema = new Schema({
         required : true,
     },
     userNumber : {
-        type : Number,
-        required : true
+        type : Number
     },
     email : {
         type : String,

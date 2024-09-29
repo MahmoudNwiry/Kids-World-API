@@ -10,8 +10,7 @@ const supervisorSchema = new Schema({
         required : true,
     },
     userNumber : {
-        type : Number,
-        required : true
+        type : Number
     },
     password : {
         type : String,
