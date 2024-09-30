@@ -20,7 +20,8 @@ const schoolSchema = new Schema({
         required : true,
     },
     userNumber : {
-        type : Number
+        type : Number,
+        required : true
     },
     phoneNumber : {
         type : String,
@@ -49,10 +50,6 @@ const schoolSchema = new Schema({
     ministerialSymbol : {
         type : String,
         required : true
-    },
-    supervisorID : {
-        type : Schema.Types.ObjectId,
-        ref : "supervisor"
     },
     resetPasswordOTP : String,
     resetPasswordExpireAt : Date

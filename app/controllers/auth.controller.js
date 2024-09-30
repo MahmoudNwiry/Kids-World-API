@@ -44,8 +44,7 @@ exports.schoolSignUp = (req, res) => {
         studentsNumber : req.body.studentsNumber,
         teachersNumber : req.body.teachersNumber,
         ministerialSymbol : req.body.ministerialSymbol,
-        type : req.body.type,
-        supervisorID : req.userId || req.body.supervisorID
+        type : req.body.type
     })
 
     user.save((err) => {
@@ -132,6 +131,7 @@ exports.supervisorSignIn = (req, res) => {
         res.status(200).send({
                 id: user._id,
                 username: user.username,
+                userNumber: user.userNumber,
                 email: user.email,
                 accessToken: token
             });
@@ -171,8 +171,8 @@ exports.schoolSignIn = (req, res) => {
         res.status(200).send({
                 id: user._id,
                 username: user.username,
+                userNumber: user.userNumber,
                 email: user.email,
-                supervisorID: user.supervisorID,
                 accessToken: token
             });
     })
