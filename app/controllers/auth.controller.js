@@ -62,8 +62,7 @@ exports.teacherSignUp = (req, res) => {
         email : req.body.email,
         password : bcrypt.hashSync(req.body.password, 8),
         levelID : req.body.levelID,
-        schoolID : req.body.schoolID || null,
-        supervisorID : req.body.supervisorID || null
+        schoolID : req.body.schoolID
     })
 
     user.save((err) => {
@@ -81,8 +80,7 @@ exports.studentSignUp = (req, res) => {
         email : req.body.email,
         password : bcrypt.hashSync(req.body.password, 8),
         levelID : req.body.levelID,
-        schoolID : req.body.schoolID,
-        supervisorID : req.body.supervisorID
+        schoolID : req.body.schoolID
     })
 
     user.save((err) => {
@@ -211,9 +209,9 @@ exports.teacherSignIn = (req, res) => {
         res.status(200).send({
                 id: user._id,
                 username: user.username,
+                userNumber: user.userNumber,
                 email: user.email,
                 schoolID: user.schoolID,
-                supervisorID: user.supervisorID,
                 accessToken: token
             });
     })
@@ -252,10 +250,10 @@ exports.studentSignIn = (req, res) => {
         res.status(200).send({
                 id: user._id,
                 username: user.username,
+                userNumber: user.userNumber,
                 email: user.email,
                 teacherID: user.teacherID,
                 schoolID: user.schoolID,
-                supervisorID: user.supervisorID,
                 accessToken: token
             });
     })

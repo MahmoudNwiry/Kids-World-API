@@ -6,7 +6,8 @@ const teacherSchema = new Schema({
         required : true,
     },
     userNumber : {
-        type : Number
+        type : Number,
+        required : true
     },
     email : {
         type : String,
@@ -23,10 +24,6 @@ const teacherSchema = new Schema({
     schoolID : {
         type : Schema.Types.ObjectId,
         ref : "school"
-    },
-    supervisorID : {
-        type : Schema.Types.ObjectId,
-        ref : "supervisor"
     },
     resetPasswordOTP : String,
     resetPasswordExpireAt : Date
