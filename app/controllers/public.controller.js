@@ -1,4 +1,5 @@
 const db = require("../models");
+const Lesson = require("../models/lesson.model");
 const Level = db.level
 const Book = db.book
 
@@ -41,7 +42,6 @@ exports.getBooks = (req, res) => {
         Book.find({
             levelID : levelId
         })
-        .populate("levelID")
         .exec((err, books) => {
             if (err) {
                 res.status(500).send({ message: err });
@@ -74,7 +74,6 @@ exports.getBooks = (req, res) => {
 exports.getBookByID = (req, res) => {
     let id = req.params.id
     Book.findById(id)
-    .populate("levelID")
     .exec((err, book) => {
         if (err) {
             res.status(500).send({ message: err });
@@ -86,4 +85,16 @@ exports.getBookByID = (req, res) => {
 
         res.status(200).send(book)
     })
+}
+
+exports.getLessons = (req, res) => {
+    let bookID = req.params.bookID;
+    Lesson.find({bookID : bookID}, "-__v")
+          .exec((err, lessons) => {
+            if(err) {
+                res.status(500).send({message : err})
+                return
+            }
+            return res.send(lessons);
+        })
 }

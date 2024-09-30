@@ -35,4 +35,6 @@ module.exports = function(app) {
   app.get("/api/levels", controller.getLevels)
   app.get("/api/books", controller.getBooks)
   app.get("/api/book/:id", controller.getBookByID)
+
+  app.get("/api/book/:bookID/lessons", controller.getLessons)
 };

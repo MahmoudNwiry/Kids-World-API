@@ -27,4 +27,20 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.updateBook
     )
+
+    app.post(
+        "/api/supervisor/books/lessons",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.addLesson
+    )
+    app.delete(
+        "/api/books/lessons/:id",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.deleteLesson
+    )
+    app.put(
+        "/api/books/lessons/:id",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.updateLesson
+    )
 }
