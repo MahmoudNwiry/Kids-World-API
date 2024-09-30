@@ -17,3 +17,43 @@ exports.addBook = (req, res) => {
         res.send({ message: "تمت إضافة الكتاب بنجاح!" })
     })
 }
+
+exports.deleteBook = (req, res) => {
+    const id = req.params.id;
+
+    Book.findByIdAndDelete(id).exec((err, book) => {
+        if(err) {
+            res.status(500).send({message : err});
+            return
+        }
+        if(!book) {
+            res.status(404).send({message : "لم يتم العثور على الكتاب"});
+            return
+        }
+        res.send({ message: "تم حذف الكتاب بنجاح!" })
+    })
+}
+
+exports.updateBook = (req, res) => {
+    const id = req.params.id;
+
+    Book.findByIdAndUpdate(
+        id,
+        {
+            name : req.body.name,
+            image : req.body.image,
+            levelID : req.body.levelID
+        }
+    )
+    .exec((err, book) => {
+        if(err) {
+            res.status(500).send({message : err});
+            return
+        }
+        if(!book) {
+            res.status(404).send({message : "لم يتم العثور على الكتاب"});
+            return
+        }
+        res.send({ message: "تم تعديل الكتاب بنجاح!" })
+    })
+}

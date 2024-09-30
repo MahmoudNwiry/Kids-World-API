@@ -16,4 +16,15 @@ module.exports = function(app) {
         controller.addBook
     );
 
+    app.delete(
+        "/api/supervisor/book/:id",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.deleteBook
+    )
+
+    app.put(
+        "/api/supervisor/book/:id",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.updateBook
+    )
 }
