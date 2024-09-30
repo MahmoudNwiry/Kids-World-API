@@ -1,5 +1,5 @@
 const { authJwt } = require("../middlewares");
-const controller = require("../controllers/user.controller");
+const controller = require("../controllers/public.controller");
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -31,4 +31,6 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isSupervisor],
     controller.supervisorBoard
   )
+
+  app.get("/api/levels", controller.getLevels)
 };
