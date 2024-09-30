@@ -2,6 +2,7 @@ const db = require("../models");
 const Lesson = require("../models/lesson.model");
 const Level = db.level
 const Book = db.book
+const Quran = db.quran
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -54,7 +55,6 @@ exports.getBooks = (req, res) => {
     }
     else {
         Book.find()
-            .populate("levelID")
             .exec((err, books) => {
                 if (err) {
                     res.status(500).send({ message: err });
@@ -66,7 +66,7 @@ exports.getBooks = (req, res) => {
         
                 res.status(200).send(books);
                 return
-            })
+        })
     }
 
 }
@@ -97,4 +97,17 @@ exports.getLessons = (req, res) => {
             }
             return res.send(lessons);
         })
+}
+
+exports.getQuran = (req, res) => {
+    Quran.find()
+    .exec((err, quran) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+
+        res.status(200).send(quran);
+        return
+    })
 }

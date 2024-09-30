@@ -34,13 +34,29 @@ module.exports = function(app) {
         controller.addLesson
     )
     app.delete(
-        "/api/books/lessons/:id",
+        "/api/supervisor/books/lessons/:id",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.deleteLesson
     )
     app.put(
-        "/api/books/lessons/:id",
+        "/api/supervisor/books/lessons/:id",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.updateLesson
+    )
+
+    app.post(
+        "/api/supervisor/quran",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.addQuran
+    )
+    app.delete(
+        "/api/supervisor/quran/:id",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.deleteQuran
+    )
+    app.put(
+        "/api/supervisor/quran/:id",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.updateQuran
     )
 }

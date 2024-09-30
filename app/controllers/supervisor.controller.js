@@ -1,6 +1,7 @@
 const db = require("../models");
 const Book = db.book;
-const Lesson = db.lesson
+const Lesson = db.lesson;
+const Quran = db.quran;
 
 exports.addBook = (req, res) => {
     const book = new Book({
@@ -115,5 +116,62 @@ exports.updateLesson = (req, res) => {
             return
         }
         res.send({ message: "تم تعديل الدرس بنجاح!" })
+    })
+}
+
+
+exports.addQuran = (req, res) => {
+    const quran = new Quran({
+        name : req.body.name,
+        order : req.body.order,
+        ayatNumber : req.body.atatNumber,
+        type : req.body.type,
+        url : req.body.url
+    })
+
+    quran.save((err) => {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+
+        return res.status(200).send({message : "تم إضافة بيانات السورة بنجاح"})
+    })
+}
+exports.deleteQuran = (req, res) => {
+    let id = req.params.id;
+    Quran.findByIdAndDelete(id)
+    .exec((err, quran) => {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+        if(!quran) {
+            res.status(500).send({message : "لم يتم العثور على شيء"})
+            return
+        }
+
+        return res.status(200).send({message : "تم الحذف"})
+      })
+}
+exports.updateQuran = (req, res) => {
+    let id = req.params.id;
+    Quran.findByIdAndUpdate(
+            id,
+            {
+                name : req.body.name,
+                order : req.body.order,
+                ayatNumber : req.body.atatNumber,
+                type : req.body.type,
+                url : req.body.url 
+            }
+    )
+    .exec((err) => {
+        if(err) {
+            res.status(500).send({message : err});
+            return
+        }
+
+        return res.send({message : "تم التعديل على بيانات السورة"})
     })
 }

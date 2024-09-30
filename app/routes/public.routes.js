@@ -37,4 +37,6 @@ module.exports = function(app) {
   app.get("/api/book/:id", controller.getBookByID)
 
   app.get("/api/book/:bookID/lessons", controller.getLessons)
+
+  app.get("/api/quran", controller.getQuran)
 };
