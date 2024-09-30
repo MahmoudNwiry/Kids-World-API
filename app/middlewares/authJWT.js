@@ -28,16 +28,18 @@ const verifyToken = (req, res, next) => {
 };
 
 const isSupervisor = (req, res, next) => {
-    Supervisor.findById(req.userId).exec((err, user) => {
+    Supervisor.findById(req.userId)
+    .exec((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
   
-      if(user) {
+      if(!user) {
+            res.status(401).send({ message: "ليس لديك صلاحية!" })
+            return
+        }
         next();
-        return
-      }
     });
 };
 
