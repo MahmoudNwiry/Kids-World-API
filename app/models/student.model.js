@@ -25,6 +25,9 @@ const studentSchema = new Schema({
         type : Schema.Types.ObjectId,
         ref : "school"
     },
+    rate: String,
+    id_Number : Number,
+    avatar : String,
     resetPasswordOTP : String,
     resetPasswordExpireAt : Date
 })

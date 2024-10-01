@@ -25,6 +25,8 @@ const teacherSchema = new Schema({
         type : Schema.Types.ObjectId,
         ref : "school"
     },
+    id_Number : Number,
+    avatar : String,
     resetPasswordOTP : String,
     resetPasswordExpireAt : Date
 });

@@ -51,6 +51,8 @@ const schoolSchema = new Schema({
         type : String,
         required : true
     },
+    id_Number : Number,
+    avatar : String,
     resetPasswordOTP : String,
     resetPasswordExpireAt : Date
 })

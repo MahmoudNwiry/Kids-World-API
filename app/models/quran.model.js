@@ -4,7 +4,7 @@ const quranSchema = new Schema({
     order : Number,
     name : String,
     ayatNumber : Number,
-    type : String,
+    type : {type : String},
     url : String
 })
 

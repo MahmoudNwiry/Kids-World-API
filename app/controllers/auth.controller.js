@@ -44,7 +44,9 @@ exports.schoolSignUp = (req, res) => {
         studentsNumber : req.body.studentsNumber,
         teachersNumber : req.body.teachersNumber,
         ministerialSymbol : req.body.ministerialSymbol,
-        type : req.body.type
+        type : req.body.type,
+        id_Number : req.body.id_Number,
+        avatar: req.body.avatar || null
     })
 
     user.save((err) => {
@@ -62,7 +64,9 @@ exports.teacherSignUp = (req, res) => {
         email : req.body.email,
         password : bcrypt.hashSync(req.body.password, 8),
         levelID : req.body.levelID,
-        schoolID : req.body.schoolID
+        schoolID : req.body.schoolID,
+        id_Number : req.body.id_Number,
+        avatar: req.body.avatar || null
     })
 
     user.save((err) => {
@@ -80,7 +84,10 @@ exports.studentSignUp = (req, res) => {
         email : req.body.email,
         password : bcrypt.hashSync(req.body.password, 8),
         levelID : req.body.levelID,
-        schoolID : req.body.schoolID
+        schoolID : req.body.schoolID,
+        rate : req.body.rate || "لم يتم التحديد",
+        id_Number : req.body.id_Number,
+        avatar: req.body.avatar || null
     })
 
     user.save((err) => {
