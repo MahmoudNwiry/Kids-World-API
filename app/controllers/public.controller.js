@@ -3,6 +3,7 @@ const Lesson = require("../models/lesson.model");
 const Level = db.level
 const Book = db.book
 const Quran = db.quran
+const Story = db.story
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -108,6 +109,19 @@ exports.getQuran = (req, res) => {
         }
 
         res.status(200).send(quran);
+        return
+    })
+}
+
+exports.getStories = (req, res) => {
+    let type = req.query.type
+    Story.find({type : type}).exec((err, stories) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+
+        res.status(200).send(stories);
         return
     })
 }

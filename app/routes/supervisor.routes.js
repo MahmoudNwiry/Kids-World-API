@@ -10,53 +10,58 @@ module.exports = function(app) {
         next();
     });
 
-    app.post(
-        "/api/supervisor/books",
+    app.post("/api/supervisor/books",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.addBook
     );
 
-    app.delete(
-        "/api/supervisor/book/:id",
+    app.delete("/api/supervisor/book/:id",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.deleteBook
     )
 
-    app.put(
-        "/api/supervisor/book/:id",
+    app.put("/api/supervisor/book/:id",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.updateBook
     )
 
-    app.post(
-        "/api/supervisor/books/lessons",
+    app.post("/api/supervisor/books/lessons",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.addLesson
     )
-    app.delete(
-        "/api/supervisor/books/lessons/:id",
+    app.delete("/api/supervisor/books/lessons/:id",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.deleteLesson
     )
-    app.put(
-        "/api/supervisor/books/lessons/:id",
+    app.put("/api/supervisor/books/lessons/:id",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.updateLesson
     )
 
-    app.post(
-        "/api/supervisor/quran",
+    app.post("/api/supervisor/quran",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.addQuran
     )
-    app.delete(
-        "/api/supervisor/quran/:id",
+    app.delete("/api/supervisor/quran/:id",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.deleteQuran
     )
-    app.put(
-        "/api/supervisor/quran/:id",
+    app.put("/api/supervisor/quran/:id",
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.updateQuran
+    )
+
+
+    app.post("/api/supervisor/stories",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.addStory
+    )
+    app.delete("/api/supervisor/story/:id",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.deleteStory
+    )
+    app.put("/api/supervisor/story/:id",
+        [authJwt.verifyToken, authJwt.isSupervisor],    
+        controller.updateStory
     )
 }

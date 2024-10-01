@@ -2,6 +2,8 @@ const db = require("../models");
 const Book = db.book;
 const Lesson = db.lesson;
 const Quran = db.quran;
+const Story = db.story;
+
 
 exports.addBook = (req, res) => {
     const book = new Book({
@@ -175,3 +177,60 @@ exports.updateQuran = (req, res) => {
         return res.send({message : "تم التعديل على بيانات السورة"})
     })
 }
+
+
+exports.addStory = (req, res) => {
+    const story = new Story({
+        name: req.body.name,
+        image : req.body.image,
+        type : req.body.type,
+        url : req.body.url
+    })
+
+    story.save((err) => {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+
+        return res.status(200).send({message : "تم إضافةالقصة بنجاح"})
+    })
+}
+exports.deleteStory = (req, res) => {
+    let id = req.params.id;
+    Story.findByIdAndDelete(id)
+    .exec((err, story) => {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+        if(!story) {
+            res.status(500).send({message : "لم يتم العثور على القصة"})
+            return
+        }
+
+        return res.status(200).send({message : "تم الحذف"})
+      })
+}
+exports.updateStory = (req, res) => {
+    let id = req.params.id;
+    Story.findByIdAndUpdate(
+            id,
+            {
+                name : req.body.name,
+                image : req.body.image,
+                type : req.body.type,
+                url : req.body.url 
+            }
+    )
+    .exec((err) => {
+        if(err) {
+            res.status(500).send({message : err});
+            return
+        }
+
+        return res.send({message : "تم التعديل على بيانات القصة"})
+    })
+}
+
+
