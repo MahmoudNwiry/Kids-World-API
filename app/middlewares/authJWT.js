@@ -39,97 +39,117 @@ const isSupervisor = (req, res, next) => {
             res.status(401).send({ message: "ليس لديك صلاحية!" })
             return
         }
+        req.role = "supervisor"
         next();
     });
 };
 
 const isSchool = (req, res, next) => {
-    School.findById(req.userId).exec((err, user) => {
-        if(err) {
-            Supervisor.findById(req.userId).exec((err, user) => {
+    School.findById(req.userId).exec((err, school) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+        if(!school) {
+            Supervisor.findById(req.userId).exec((err, supervisor) => {
                 if (err) {
                   res.status(500).send({ message: err });
                   return;
                 }
             
-                if(user) {
-                  next();
-                  return
+                if(!supervisor) {
+                    res.status(401).send({ message: "ليس لديك صلاحية!" })
+                    return
                 }
+                req.role = "supervisor"
+                next();
             });
         }
-        if(user) {
-            next();
-            return;
-        }
+        req.role = "school"
+        next();
     })
 }
 
 const isTeacher = (req, res, next) => {
-    Teacher.findById(req.userId).exec((err, user) => {
-        if(err) {
-            School.findById(req.userId).exec((err, user) => {
-                if(err) {
-                    Supervisor.findById(req.userId).exec((err, user) => {
+    Teacher.findById(req.userId).exec((err, teacher) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+        if(!teacher) {
+            School.findById(req.userId).exec((err, school) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if(!school) {
+                    Supervisor.findById(req.userId).exec((err, supervisor) => {
                         if (err) {
                           res.status(500).send({ message: err });
                           return;
                         }
                     
-                        if(user) {
-                          next();
-                          return
+                        if(!supervisor) {
+                            res.status(401).send({ message: "ليس لديك صلاحية!" })
+                            return
                         }
+                        req.role = "supervisor"
+                        next();
                     });
                 }
-                if(user) {
-                    next();
-                    return;
-                }
+                req.role = "school"
+                next();
             })
         }
-        if(user) {
-            next();
-            return;
-        }
+        req.role = "teacher"
+        next();
+
     })
 }
 
 const isStudent = (req, res, next) => {
-    Student.findById(req.userId).exec((err, user) => {
-        if(err) {
-            Teacher.findById(req.userId).exec((err, user) => {
-                if(err) {
-                    School.findById(req.userId).exec((err, user) => {
-                        if(err) {
-                            Supervisor.findById(req.userId).exec((err, user) => {
-                                if (err) {
-                                  res.status(500).send({ message: err });
-                                  return;
-                                }
-                            
-                                if(user) {
-                                  next();
-                                  return
-                                }
-                            });
-                        }
-                        if(user) {
-                            next();
-                            return;
-                        }
-                    })
-                }
-                if(user) {
-                    next();
-                    return;
-                }
-            })
-        }
-        if(user) {
-            next();
+    Student.findById(req.userId).exec((err, student) => {
+        if (err) {
+            res.status(500).send({ message: err });
             return;
         }
+        if(!student) {
+            Teacher.findById(req.userId).exec((err, teacher) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if(!teacher) {
+                    School.findById(req.userId).exec((err, school) => {
+                        if (err) {
+                            res.status(500).send({ message: err });
+                            return;
+                        }
+                        if(!school) {
+                            Supervisor.findById(req.userId).exec((err, supervisor) => {
+                                if (err) {
+                                    res.status(500).send({ message: err });
+                                    return;
+                                }
+                              
+                                if(!supervisor) {
+                                    res.status(401).send({ message: "ليس لديك صلاحية!" })
+                                    return
+                                }
+                                req.role = "supervisor"
+                                next();
+                            });
+                        }
+                        req.role = "school"
+                        next();
+                    })
+                }
+                req.role = "teacher"
+                next();
+            })
+        }
+        req.role = "student"
+        next();
     })
 }
 

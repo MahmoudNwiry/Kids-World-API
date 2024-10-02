@@ -33,6 +33,7 @@ app.get("/", (req, res) => {
 require('./app/routes/auth.routes')(app);
 require('./app/routes/public.routes')(app);
 require('./app/routes/supervisor.routes')(app);
+require('./app/routes/teacher.routes')(app);
 
 
 app.listen(5000, ()=>console.log("listening to port 5000: http://localhost:5000"));
