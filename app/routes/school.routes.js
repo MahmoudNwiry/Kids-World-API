@@ -10,7 +10,7 @@ module.exports = function(app) {
         next();
     })
 
-    app.get("/api/school/students", 
+    app.get("/api/school/users", 
         [authJwt.verifyToken, authJwt.isSchool],
         controller.getStudentsAndTeachers
     )
@@ -22,4 +22,15 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.isSchool],
         controller.deleteStudent
     )
+
+
+    app.put("/api/school/teacher/:teacherId",
+        [authJwt.verifyToken, authJwt.isSchool],
+        controller.updateTeacher
+    )
+    app.delete("/api/school/teacher/:teacherId",
+        [authJwt.verifyToken, authJwt.isSchool],
+        controller.deleteTeacher
+    )
+    
 }
