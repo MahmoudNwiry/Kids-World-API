@@ -3,6 +3,7 @@ const Book = db.book;
 const Lesson = db.lesson;
 const Quran = db.quran;
 const Story = db.story;
+const Report = db.report
 
 
 exports.addBook = (req, res) => {
@@ -234,3 +235,15 @@ exports.updateStory = (req, res) => {
 }
 
 
+
+exports.getAllReports = (req, res) => {
+    Report.find()
+    .exec((err, reports) => {
+        if(err) {
+            res.status(500).send({message : err})
+            return 
+        }
+
+        res.status(200).send(reports)
+    })
+}

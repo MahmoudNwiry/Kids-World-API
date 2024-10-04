@@ -14,7 +14,8 @@ db.level = require("./level.model");
 db.book = require("./book.model");
 db.lesson = require("./lesson.model");
 db.quran = require("./quran.model");
-db.story = require("./story.model")
+db.story = require("./story.model");
+db.report = require("./report.model")
 
 
 module.exports = db;

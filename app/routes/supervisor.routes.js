@@ -64,4 +64,9 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.isSupervisor],    
         controller.updateStory
     )
+
+    app.get("/api/supervisor/reports",
+        [authJwt.verifyToken, authJwt.isSupervisor],
+        controller.getAllReports
+    )
 }

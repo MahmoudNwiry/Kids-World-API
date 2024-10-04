@@ -38,4 +38,18 @@ module.exports = function(app) {
   app.get("/api/book/:bookID/lessons", controller.getLessons)
   app.get("/api/quran", controller.getQuran)
   app.get("/api/stories", controller.getStories)
+
+  app.post("/api/reports",
+    [authJwt.verifyToken, authJwt.isTeacherSenderReport, authJwt.isTeacherReceiverReport],
+    controller.sendReport
+  )
+  app.get("/api/my-reports", 
+    [authJwt.verifyToken, authJwt.isTeacher],
+    controller.getMyReports
+  )
+
+  app.get("/api/report/:reportId", 
+    [authJwt.verifyToken, authJwt.isTeacher],
+    controller.getReportById
+  )
 };
