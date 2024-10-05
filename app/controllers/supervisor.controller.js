@@ -1,4 +1,8 @@
 const db = require("../models");
+
+const School = db.school
+const Teacher = db.teacher
+const Student = db.student
 const Book = db.book;
 const Lesson = db.lesson;
 const Quran = db.quran;
@@ -245,5 +249,203 @@ exports.getAllReports = (req, res) => {
         }
 
         res.status(200).send(reports)
+    })
+}
+
+exports.getAllUsers = async (req, res) => {
+    try {
+        const students = await Student.find()
+        const teachers = await Teacher.find()
+        const schools = await School.find()
+
+        res.status(200).send({students, teachers, schools})
+
+    } catch (error) {
+        res.status(500).send({message : err})
+        return
+    }
+}
+
+exports.updateStudent = (req, res) => {
+    if(req.body?.password) {
+        res.status(400).send({message : "لا يمكن تعديل كلمة المرور  "})
+        return
+    }
+
+    if(req.body?.userNumber) {
+        res.status(400).send({message : "لا يمكن تعديل رقم الطالب"})
+        return
+    }
+
+    const studentId = req.params.studentId
+
+    Student.findByIdAndUpdate(
+        studentId,
+        {
+            username : req.body.username,
+            userNumber : req.body.userNumber,
+            email : req.body.email,
+            levelID : req.body.levelID,
+            schoolID : req.body.schoolID,
+            rate : req.body.rate,
+            id_Number : req.body.id_Number,
+            avatar: req.body.avatar
+        }
+    ).exec((err, student)=> {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+
+        if(!student) {
+            res.status(404).send({message : "لم يتم العثور على الطالب"})
+            return
+        }
+
+        res.status(200).send({message : "تم تعديل بيانات الطالب"})
+    })
+}
+exports.deleteStudent = (req, res) => {
+    const studentId = req.params.studentId
+    Student.findByIdAndDelete(studentId).exec((err, student)=> {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+
+        if(!student) {
+            res.status(404).send({message : "لم يتم العثور على الطالب"})
+            return
+        }
+
+        res.status(200).send({message : "تم حذف الطالب"})
+    })
+}
+
+exports.updateTeacher = (req, res) => {
+    if(req.body?.password) {
+        res.status(400).send({message : "لا يمكن تعديل كلمة المرور  "})
+        return
+    }
+
+    if(req.body?.userNumber) {
+        res.status(400).send({message : "لا يمكن تعديل رقم المعلم"})
+        return
+    }
+
+    const teacherId = req.params.teacherId;
+    Teacher.findByIdAndUpdate(
+        teacherId,
+        {
+            username : req.body.username,
+            email : req.body.email,
+            levelID : req.body.levelID,
+            schoolID : req.body.schoolID,
+            id_Number : req.body.id_Number,
+            avatar: req.body.avatar
+        }
+    ).exec((err, teacher)=> {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+
+        if(!teacher) {
+            res.status(404).send({message : "لم يتم العثور على المعلم"})
+            return
+        }
+
+        res.status(200).send({message : "تم تعديل بيانات المعلم"})
+    })
+}
+exports.deleteTeacher = (req, res) => {
+    const teacherId = req.params.teacherId
+    Teacher.findByIdAndDelete(teacherId).exec((err, teacher)=> {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+
+        if(!teacher) {
+            res.status(404).send({message : "لم يتم العثور على المعلم"})
+            return
+        }
+
+        res.status(200).send({message : "تم حذف المعلم"})
+    })
+}
+
+exports.updateSchool = (req, res) => {
+    if(req.body?.password) {
+        res.status(400).send({message : "لا يمكن تعديل كلمة المرور  "})
+        return
+    }
+
+    if(req.body?.userNumber) {
+        res.status(400).send({message : "لا يمكن تعديل رقم المدير"})
+        return
+    }
+
+    const schoolId = req.params.schoolId;
+    School.findByIdAndUpdate(
+        schoolId,
+        {
+            username : req.body.username,
+            email : req.body.email,
+            name : {
+                ar : req.body.name?.ar,
+                en : req.body.name?.en
+            },
+            gender : req.body.gender,
+            phoneNumber : req.body.phoneNumber,
+            studentsNumber : req.body.studentsNumber,
+            teachersNumber : req.body.teachersNumber,
+            ministerialSymbol : req.body.ministerialSymbol,
+            type : req.body.type,
+            id_Number : req.body.id_Number,
+            avatar: req.body.avatar
+        }
+    ).exec((err, school)=> {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+
+        if(!school) {
+            res.status(404).send({message : "لم يتم العثور على المدير"})
+            return
+        }
+
+        res.status(200).send({message : "تم تعديل بيانات المدير"})
+    })
+}
+
+exports.deleteSchool = (req, res) => {
+    const schoolId = req.params.schoolId;
+    School.findById(schoolId).exec(async (err, school) => {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+
+        if(!school) {
+            res.status(404).send({message : "لم يتم العثور على المدرسة"})
+            return
+        }
+        try {
+            await Student.deleteMany({schoolID : schoolId})
+            await Teacher.deleteMany({schoolID: schoolId})
+            School.findByIdAndDelete(schoolId).exec(err => {
+                if(err) {
+                    res.status(500).send({message : err})
+                    return
+                }
+                res.status(200).send({message : "تم حذف المدرسة وجميع بياناتها"})
+            })
+        }
+        catch (err) {
+            res.status(500).send({message : err})
+            return
+        }
     })
 }

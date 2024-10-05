@@ -32,6 +32,7 @@ module.exports = function(app) {
     controller.supervisorBoard
   )
 
+  app.get("/api/schools", controller.getSchools)
   app.get("/api/levels", controller.getLevels)
   app.get("/api/books", controller.getBooks)
   app.get("/api/book/:id", controller.getBookByID)

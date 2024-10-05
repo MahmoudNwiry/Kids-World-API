@@ -1,10 +1,11 @@
 const db = require("../models");
-const Lesson = require("../models/lesson.model");
 const Level = db.level
 const Book = db.book
 const Quran = db.quran
 const Story = db.story
 const Report = db.report
+const Lesson = db.lesson
+const School = db.school
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -24,6 +25,20 @@ exports.schoolBoard = (req, res) => {
 exports.supervisorBoard = (req, res) => {
     res.status(200).send("Supervisor Content.");
 };
+
+exports.getSchools = (req, res) => {
+    School.find(
+        {},
+        "-password -email -userNumber -__v -teachersNumber -studentsNumber -ministerialSymbol -id_Number -avatar"
+    ).exec((err, schools) => {
+        if(err) {
+            res.status(500).send({message : err})
+            return
+        }
+
+        res.status(200).send(schools)
+    })
+}
 
 exports.getLevels = (req, res) => {
     Level.find().exec((err, levels) => {

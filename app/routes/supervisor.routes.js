@@ -69,4 +69,33 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.isSupervisor],
         controller.getAllReports
     )
+
+    app.get("/api/supervisor/users",
+        [authJwt.verifyToken, authJwt.isSupervisor],
+        controller.getAllUsers
+    )
+    app.put("/api/supervisor/student/:studentId",
+        [authJwt.verifyToken, authJwt.isSupervisor],
+        controller.updateStudent
+    )
+    app.delete("/api/supervisor/student/:studentId",
+        [authJwt.verifyToken, authJwt.isSupervisor],
+        controller.deleteStudent
+    )
+    app.put("/api/supervisor/teacher/:teacherId",
+        [authJwt.verifyToken, authJwt.isSupervisor],
+        controller.updateTeacher
+    )
+    app.delete("/api/supervisor/teacher/:teacherId",
+        [authJwt.verifyToken, authJwt.isSupervisor],
+        controller.deleteTeacher
+    )
+    app.put("/api/supervisor/school/:schoolId",
+        [authJwt.verifyToken, authJwt.isSupervisor],
+        controller.updateSchool
+    )
+    app.delete("/api/supervisor/school/:schoolId",
+        [authJwt.verifyToken, authJwt.isSupervisor],
+        controller.deleteSchool
+    )
 }
