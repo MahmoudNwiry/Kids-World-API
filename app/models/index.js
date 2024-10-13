@@ -15,7 +15,8 @@ db.book = require("./book.model");
 db.lesson = require("./lesson.model");
 db.quran = require("./quran.model");
 db.story = require("./story.model");
-db.report = require("./report.model")
+db.report = require("./report.model");
+db.notification = require("./notification.model");
 
 
 module.exports = db;

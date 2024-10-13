@@ -53,4 +53,8 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isTeacher],
     controller.getReportById
   )
+
+  app.put("/api/notification-read", authJwt.verifyToken, controller.readNotifications)
+  app.post("/api/a",authJwt.verifyToken, controller.addN)
+  app.get("/api/a",authJwt.verifyToken, controller.getNotidications)
 };

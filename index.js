@@ -35,6 +35,7 @@ require('./app/routes/public.routes')(app);
 require('./app/routes/supervisor.routes')(app);
 require('./app/routes/school.routes')(app);
 require('./app/routes/teacher.routes')(app);
+require('./app/routes/student.routes')(app);
 
 
 app.listen(5000, ()=>console.log("listening to port 5000: http://localhost:5000"));

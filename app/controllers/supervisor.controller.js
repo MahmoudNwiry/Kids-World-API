@@ -131,7 +131,7 @@ exports.addQuran = (req, res) => {
     const quran = new Quran({
         name : req.body.name,
         order : req.body.order,
-        ayatNumber : req.body.atatNumber,
+        ayatNumber : req.body.ayatNumber,
         type : req.body.type,
         url : req.body.url
     })

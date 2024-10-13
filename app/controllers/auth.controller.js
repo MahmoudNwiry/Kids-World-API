@@ -259,8 +259,8 @@ exports.studentSignIn = (req, res) => {
                 username: user.username,
                 userNumber: user.userNumber,
                 email: user.email,
-                teacherID: user.teacherID,
                 schoolID: user.schoolID,
+                levelID : user.levelID,
                 accessToken: token
             });
     })

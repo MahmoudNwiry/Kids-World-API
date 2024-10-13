@@ -6,6 +6,7 @@ const Story = db.story
 const Report = db.report
 const Lesson = db.lesson
 const School = db.school
+const Notifications = db.notification
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -222,4 +223,55 @@ exports.getReportById = (req, res) => {
             return res.status(200).send(report);
         })
     }
+}
+
+exports.readNotifications = (req, res) => {
+    Notifications.updateMany({
+        _id : {
+            $in : req.body.notifications
+        }
+    },{
+        $push : {
+            readedBy : req.userId
+        }
+    })
+    .exec(err => {
+        if(err) {
+            res.status(500).send({message : err})
+            return 
+        }
+
+        res.status(200).send("تم")
+    })
+}
+
+exports.addN = (req, res) => {
+    const notification = new Notifications({
+        from : req.userId,
+        to : req.body.to,
+        body : req.body.body
+    })
+
+    notification.save(err => {
+        if(err) {
+            res.status(500).send({message : err})
+            return 
+        }
+
+        res.status(200).send("تم")
+    })
+}
+
+exports.getNotidications = (req, res) => {
+    Notifications.find({
+        readedBy : {$ne : req.userId},
+        to : {$in : [req.userId, "all", req.role]}
+    }).exec((err, notifications) => {
+        if(err) {
+            res.status(500).send({message : err})
+            return 
+        }
+
+        res.status(200).send(notifications)
+    })
 }

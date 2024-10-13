@@ -124,11 +124,21 @@ const isStudent = (req, res, next) => {
             res.status(500).send({ message: err });
             return;
         }
+
+        if(student) {
+            req.role = "student"
+            next();
+        }
+
         if(!student) {
             Teacher.findById(req.userId).exec((err, teacher) => {
                 if (err) {
                     res.status(500).send({ message: err });
                     return;
+                }
+                if(teacher) {
+                    req.role = "teacher"
+                    next();
                 }
                 if(!teacher) {
                     School.findById(req.userId).exec((err, school) => {
@@ -136,31 +146,32 @@ const isStudent = (req, res, next) => {
                             res.status(500).send({ message: err });
                             return;
                         }
+                        if(school) {
+                            req.role = "school"
+                            next();
+                        }
                         if(!school) {
                             Supervisor.findById(req.userId).exec((err, supervisor) => {
                                 if (err) {
-                                    res.status(500).send({ message: err });
-                                    return;
+                                  res.status(500).send({ message: err });
+                                  return;
                                 }
-                              
+        
+                                if(supervisor) {                         
+                                    req.role = "supervisor"
+                                    next();
+                                }
+                            
                                 if(!supervisor) {
                                     res.status(401).send({ message: "ليس لديك صلاحية!" })
                                     return
                                 }
-                                req.role = "supervisor"
-                                next();
                             });
                         }
-                        req.role = "school"
-                        next();
                     })
                 }
-                req.role = "teacher"
-                next();
             })
         }
-        req.role = "student"
-        next();
     })
 }
 
